@@ -1,0 +1,2 @@
+graft atlasclld
+global-exclude *.py[co]
