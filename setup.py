@@ -20,7 +20,6 @@ setup(
     zip_safe=False,
     install_requires=[
         "clld",  # >=7.0
-        "clldmpg",
         "clld-markdown-plugin>=0.3.0",
     ],
     extras_require={

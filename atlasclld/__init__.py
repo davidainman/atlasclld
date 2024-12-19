@@ -104,8 +104,6 @@ def main(global_config, **settings):
     config.include("clld.web.app")
     config.include('clld_markdown_plugin')
 
-    config.include("clldmpg")
-
     config.add_route("featuresets", "/contributions")
     config.register_resource('contribution', models.ATLAsFeatureSet, IContribution, with_index=True)
 

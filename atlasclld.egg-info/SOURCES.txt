@@ -45,6 +45,7 @@ atlasclld/templates/atlasclld.mako
 atlasclld/templates/contact.mako
 atlasclld/templates/credits.mako
 atlasclld/templates/download.mako
+atlasclld/templates/legal.mako
 atlasclld/templates/codes/index_html.mako
 atlasclld/templates/contribution/detail_html.mako
 atlasclld/templates/contribution/index_html.mako

@@ -22,15 +22,14 @@ def main(args):
     # args.log.info('Loading dataset')
     ds = args.cldf
     data = Data()
-    data.add(
-        common.Dataset,
-        "ATLAs",
+    
+    dataset = common.Dataset(
         name="ATLAs",
         id="atlas",
         domain="the-url-we-will-use",
-        publisher_name="TODO_ PUBLISHER",
-        publisher_place="TODO_ PUBLISHER_ PLace",
-        publisher_url="http://www.shh.mpg.de",
+        publisher_name="University of Zurich",
+        publisher_place="Zurich, Switzerland",
+        publisher_url="https://www.uzh.ch/",
         license="http://creativecommons.org/licenses/by/4.0/",
         jsondata={
             "license_icon": "cc-by.png",  # TODO: replace with custome one
@@ -38,6 +37,8 @@ def main(args):
         },
         description="Areal Typology of Languages of the Americas"
     )
+    
+    DBSession.add(dataset)
     DBSession.flush()
     lrefs = collections.defaultdict(set)
     all_sources = set()
@@ -49,12 +50,14 @@ def main(args):
     DBSession.flush()
 
     for row in tqdm(ds.iter_rows("contributors.csv"), desc="Processing contributors"):
-        data.add(
+        c = data.add(
             common.Contributor,
             row["ContributorID"],
             id=row["ContributorID"],
             name=row["Name"],
         )
+        if row["Editor_Ord"]:
+            data.add(common.Editor, row["Editor_Ord"], dataset=dataset, contributor=c, ord=row["Editor_Ord"])
     DBSession.flush()
 
     for c, row in enumerate(
