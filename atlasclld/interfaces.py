@@ -5,7 +5,7 @@ from clld.web.icon import MapMarker
 from clldutils import svg
 
 
-class OaaMapMarker(MapMarker):
+class AtlasMapMarker(MapMarker):
     @staticmethod
     def pie(*slices):
         return svg.data_url(svg.pie(
@@ -49,4 +49,4 @@ class OaaMapMarker(MapMarker):
 
 
 def includeme(config):
-    config.registerUtility(OaaMapMarker(), IMapMarker)
+    config.registerUtility(AtlasMapMarker(), IMapMarker)
