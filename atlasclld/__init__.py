@@ -29,7 +29,7 @@ from markdown.extensions import footnotes
 
 # we must make sure custom models are known at database initialization!
 from atlasclld import models
-from atlasclld.interfaces import OaaMapMarker
+from atlasclld.interfaces import AtlasMapMarker
 
 
 def map_marker(ctx, req):
@@ -86,7 +86,7 @@ def render_parameter(req, objid, table, session, ids=None, **kw):
 
 def main(global_config, **settings):
     """This function returns a Pyramid WSGI application."""
-    settings["route_patterns"] = { 'credits': '/about/credits'}
+    settings["route_patterns"] = { 'credits': '/about/acknowledgments'}
     settings['clld_markdown_plugin'] = {
         'model_map': {
             'ValueTable': common.ValueSet,
@@ -114,7 +114,7 @@ def main(global_config, **settings):
     # config.register_resource("value", models.ATLAsValue, IValue, with_index=True)
 
     config.registry.registerUtility(CtxFactory(), ICtxFactoryQuery)
-    config.registry.registerUtility(OaaMapMarker(), IMapMarker)
+    config.registry.registerUtility(AtlasMapMarker(), IMapMarker)
     config.add_route("references", "/sources")
     # config.registry.registerUtility(LanguageByFamilyMapMarker(), IMapMarker)
     config.register_menu(
