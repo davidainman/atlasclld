@@ -3,7 +3,7 @@ import functools
 
 from pyramid.config import Configurator
 
-from clld_glottologfamily_plugin import util
+from clld_glottologfamily_plugin import util as glottolog_util
 
 from clldutils import svg
 from clld.interfaces import (
@@ -66,7 +66,6 @@ def map_marker(ctx, req):
 
 
 class CtxFactory(CtxFactoryQuery):
-
     def refined_query(self, query, model, req):
         if model == common.Contribution:
             query = query.options()
@@ -74,7 +73,7 @@ class CtxFactory(CtxFactoryQuery):
             pass
         return query
 
-class LanguageByFamilyMapMarker(util.LanguageByFamilyMapMarker):
+class LanguageByFamilyMapMarker(glottolog_util.LanguageByFamilyMapMarker):
     def __call__(self, ctx, req):
         return super(LanguageByFamilyMapMarker, self).__call__(ctx, req)
 

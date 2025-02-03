@@ -1,12 +1,13 @@
 import itertools
 import typing
+import math
 
 from clld.web.util.htmllib import HTML, literal
 from clld.web.util.helpers import map_marker_img, get_adapter, external_link
 from clld.db.meta import DBSession
 from clld.db.models import common
 from clldutils.color import rgb_as_hex
-from clldutils.svg import svg
+from clldutils.svg import svg, style
 from sqlalchemy.orm import joinedload
 
 
@@ -96,7 +97,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
     svg_content = []
     total = sum(data)
     titles = titles or [None] * len(data)
-    stroke_circle = 'black' if stroke_circle is True else stroke_circle or 'none'
+    stroke_circle = '#555555' if stroke_circle is True else stroke_circle or 'none'
 
     def endpoint(angle_rad):
         """
