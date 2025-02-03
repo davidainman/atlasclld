@@ -21,7 +21,6 @@ class AtlasMapMarker(MapMarker):
             if icon :
                 for value in ctx.values:
                     slices[icon] += value.frequency or 1
-
                 return self.pie(*[(v, k) for k, v in slices.most_common()])
 
         elif IValueSet.providedBy(ctx):
@@ -41,7 +40,7 @@ class AtlasMapMarker(MapMarker):
 
         else:
             slices = Counter()
-            icon = '#ff6600'
+            icon = '#ffffff'
             slices[icon] = 1
             return self.pie(*[(v, k) for k, v in slices.most_common()])
 
