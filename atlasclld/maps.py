@@ -9,11 +9,10 @@ class FeatureMap(ParameterMap):
         ParameterMap.__init__(self, ctx, req, eid=eid)
 
     def get_options(self):
-        return {'max_zoom': 6, 'icon_size': 20}
-        #if (self.ctx.datatype == "multi-valued" or self.ctx.datatype == "frequency"):
-        #    return {'max_zoom': 6, 'icon_size': 20}
-        #else:
-        #    return {'max_zoom': 6, 'icon_size': 20}
+        if (self.ctx.datatype == "multi-valued" or self.ctx.datatype == "frequency"):
+            return {'max_zoom': 6, 'icon_size': 24}
+        else:
+            return {'max_zoom': 6, 'icon_size': 20}
 
     def get_layers(self):
         yield Layer(
