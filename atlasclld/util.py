@@ -35,8 +35,7 @@ def value_table(ctx, req):
         de = domain[depk]
         exclusive = 0
         shared = 0
-        icon = de.jsondata['icon']
-        if not icon:
+        if not de.jsondata['icon']:
             continue
         for dev in de.values:
             if vspks.count(dev.valueset_pk) > 1:
@@ -52,31 +51,6 @@ def value_table(ctx, req):
         cells.append(HTML.td(str(shared), class_='right'))
         cells.append(HTML.td(str(len(de.values)), class_='right'))
         rows.append(HTML.tr(*cells))
-    
-    # to not print unattested possible values
-#     for depk, vals in itertools.groupby(q, lambda v: v.domainelement_pk):
-#         de = domain[depk]
-#         exclusive = 0
-#         shared = 0
-#         icon = de.jsondata['icon']
-#         if not icon:
-#             continue
-#         for v in vals:
-#             if vspks.count(v.valueset_pk) > 1:
-#                 shared += 1
-#             else:
-#                 exclusive += 1
-#             langs[v.valueset.language_pk] = 1
-# 
-#         cells = [
-#             HTML.td(map_marker_img(req, de)),
-#             HTML.td(literal(de.description)),
-#             HTML.td(str(exclusive), class_='right'),
-#         ]
-#         cells.append(HTML.td(str(shared), class_='right'))
-#         cells.append(HTML.td(str(len(de.values)), class_='right'))
-#         rows.append(HTML.tr(*cells))
-
 
     rows.append(HTML.tr(
         HTML.td('Total Languages:', colspan=str(len(cells) - 1), class_='right'),

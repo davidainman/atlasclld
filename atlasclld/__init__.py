@@ -32,39 +32,6 @@ from atlasclld import models
 from atlasclld.interfaces import AtlasMapMarker
 
 
-def map_marker(ctx, req):
-    """allow for user-selectable markers.
-
-    we have to look up a possible custom selection from the url params.
-    """
-    icon = None
-
-    if IValue.providedBy(ctx):
-        icon = req.params.get(
-            "v%s" % ctx.domainelement.number, ctx.domainelement.jsondata["icon"]
-        )
-    elif IDomainElement.providedBy(ctx):
-        icon = req.params.get("v%s" % ctx.number, ctx.jsondata["icon"])
-    elif ILanguage.providedBy(ctx):
-        # hard coded icon
-        icon = req.params.get(ctx.id, "c0000dd")
-        # icon = req.params.get(ctx.id, ctx.genus.icon)
-
-    if icon:
-        if "'" in icon:
-            icon = icon.split("'")[0]
-        if len(icon) > 4 and len(icon) != 7:
-            icon = icon[:4]
-        if len(icon) == 4:
-            icon = icon[0] + 2 * icon[1] + 2 * icon[2] + 2 * icon[3]
-        if icon.startswith("a"):
-            return svg.data_url(svg.icon("c000000", opacity="0"))
-        try:
-            return svg.data_url(svg.icon(icon))
-        except KeyError:
-            return ""
-
-
 class CtxFactory(CtxFactoryQuery):
     def refined_query(self, query, model, req):
         if model == common.Contribution:

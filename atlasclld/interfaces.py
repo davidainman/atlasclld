@@ -18,10 +18,12 @@ class AtlasMapMarker(MapMarker):
         if IDomainElement.providedBy(ctx):
             slices = Counter()
             icon = ctx.jsondata['icon']
-            if icon :
-                for value in ctx.values:
-                    slices[icon] += value.frequency or 1
-                return self.pie(*[(v, k) for k, v in slices.most_common()])
+            if icon:
+                if ctx.values:
+                    for value in ctx.values:
+                        slices[icon] += value.frequency or 1
+                    return self.pie(*[(v, k) for k, v in slices.most_common()])
+                return self.pie((1, icon))
 
         elif IValueSet.providedBy(ctx):
             slices = Counter()
