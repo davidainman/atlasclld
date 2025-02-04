@@ -43,13 +43,14 @@ def value_table(ctx, req):
             else:
                 exclusive += 1
             langs[dev.valueset.language_pk] = 1
+        unattested = shared == 0 and exclusive == 0
         cells = [
             HTML.td(map_marker_img(req, de)),
-            HTML.td(HTML.s(de.description) if shared == 0 and exclusive == 0 else literal(de.description)),
-            HTML.td(str(exclusive), class_='right'),
+            HTML.td(HTML.span(de.description, class_ = 'unattested-value') if unattested else literal(de.description)),
+            HTML.td(str(exclusive), class_='right unattested-value') if unattested else HTML.td(str(exclusive), class_='right'),
         ]
-        cells.append(HTML.td(str(shared), class_='right'))
-        cells.append(HTML.td(str(len(de.values)), class_='right'))
+        cells.append(HTML.td(str(shared), class_='right unattested-value') if unattested else HTML.td(str(shared), class_='right'))
+        cells.append(HTML.td(str(len(de.values)), class_='right unattested-value') if unattested else HTML.td(str(len(de.values)), class_='right'))
         rows.append(HTML.tr(*cells))
 
     rows.append(HTML.tr(
@@ -108,7 +109,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
 
     if len(data) == 1:
         svg_content.append(
-            '<circle cx="{0}" cy="{1}" r="{2}" style="stroke:{3}; fill:{4}; fill-opacity:{5}">'.format(
+            '<circle cx="{0}" cy="{1}" r="{2}" style="stroke:{3}; stroke-width:0.5px; vector-effect:non-scaling-stroke; fill:{4}; fill-opacity:{5}">'.format(
                 cx, cy, radius, stroke_circle, rgb_as_hex(colors[0]), opacity))
         if titles[0]:
             svg_content.append('<title>{0}</title>'.format(escape(titles[0])))
@@ -130,7 +131,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
 
     if stroke_circle != 'none':
         svg_content.append(
-            '<circle cx="%s" cy="%s" r="%s" style="stroke:%s; fill:none;"/>'
+            '<circle cx="%s" cy="%s" r="%s" style="stroke:%s; stroke-width:1px; vector-effect:non-scaling-stroke; fill:none;"/>'
             % (cx, cy, radius, stroke_circle))
 
     return svg(''.join(svg_content), height=width, width=width)
