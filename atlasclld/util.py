@@ -45,7 +45,7 @@ def value_table(ctx, req):
             langs[dev.valueset.language_pk] = 1
         cells = [
             HTML.td(map_marker_img(req, de)),
-            HTML.td(literal(de.description)),
+            HTML.td(HTML.s(de.description) if shared == 0 and exclusive == 0 else literal(de.description)),
             HTML.td(str(exclusive), class_='right'),
         ]
         cells.append(HTML.td(str(shared), class_='right'))
