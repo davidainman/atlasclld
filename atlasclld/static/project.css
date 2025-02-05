@@ -5168,3 +5168,6 @@ a.Source:visited { color: #8c1522; }
 .unattested-value {
   color: #888;
 }
+th.right {
+  text-align: right !important;
+}
