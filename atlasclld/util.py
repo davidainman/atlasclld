@@ -30,7 +30,6 @@ def value_table(ctx, req):
         .options(joinedload(common.Value.valueset)).all()
     vspks = [v.valueset_pk for v in q]
     
-    # to print unattested possible values
     for depk in domain:
         de = domain[depk]
         exclusive = 0
@@ -49,8 +48,9 @@ def value_table(ctx, req):
             HTML.td(HTML.span(de.description, class_ = 'unattested-value') if unattested else literal(de.description)),
             HTML.td(str(exclusive), class_='right unattested-value') if unattested else HTML.td(str(exclusive), class_='right'),
         ]
-        cells.append(HTML.td(str(shared), class_='right unattested-value') if unattested else HTML.td(str(shared), class_='right'))
-        cells.append(HTML.td(str(len(de.values)), class_='right unattested-value') if unattested else HTML.td(str(len(de.values)), class_='right'))
+        if ctx.datatype == "multi-valued" or ctx.datatype == "frequency": # "partial" exists
+            cells.append(HTML.td(str(shared), class_='right unattested-value') if unattested else HTML.td(str(shared), class_='right'))
+            cells.append(HTML.td(str(len(de.values)), class_='right unattested-value') if unattested else HTML.td(str(len(de.values)), class_='right'))
         rows.append(HTML.tr(*cells))
 
     rows.append(HTML.tr(
@@ -58,10 +58,16 @@ def value_table(ctx, req):
         HTML.td('%s' % len(langs), class_='right')))
 
     parts = []
-    parts.append(HTML.thead(
-        HTML.tr(*[HTML.th(s, class_='right')
-                  for s in [' ', '             ', 'exclusive', 'partial', 'all']]))
-    )
+    if ctx.datatype == "multi-valued" or ctx.datatype == "frequency": # "partial" exists
+        parts.append(HTML.thead(
+            HTML.tr(*[HTML.th(s, class_='right')
+                      for s in [' ', '             ', 'exclusive', 'partial', 'all']]))
+        )
+    else:
+        parts.append(HTML.thead(
+            HTML.tr(*[HTML.th(s, class_='right')
+                      for s in [' ', '             ', 'count']]))
+        )
     parts.append(HTML.tbody(*rows))
     return HTML.table(*parts, class_='table table-condensed')
 
