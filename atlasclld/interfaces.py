@@ -49,3 +49,4 @@ class AtlasMapMarker(MapMarker):
 
 def includeme(config):
     config.registerUtility(AtlasMapMarker(), IMapMarker)
+
