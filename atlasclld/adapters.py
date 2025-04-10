@@ -1,4 +1,5 @@
 from clld import interfaces
+from atlasclld.md import BibTex, TxtCitation
 from clld.web.adapters import GeoJsonParameter
 from clld.db.meta import DBSession
 from clld.db.models import common
@@ -33,8 +34,6 @@ class GeoJsonFeature(GeoJsonParameter):
                 res['icon'] = data_url(ATLAsPie([1], [val.domainelement.jsondata['icon']], width=25, opacity=1, stroke_circle=True))
         if valueset.parameter.datatype != 'integer' and not valueset.values[0].domainelement.jsondata.get('icon'):
             res['icon'] = data_url(ATLAsPie([1], ['#ffffff'], width=3, opacity=0.0, stroke_circle=True))
-#         else:
-#             res['icon'] = data_url(ATLAsPie([1], [valueset.values[0].domainelement.jsondata['icon']], width=25, opacity=0.75, stroke_circle=True))
         return res
 
     def featurecollection_properties(self, ctx, req):
@@ -50,3 +49,7 @@ class GeoJsonFeature(GeoJsonParameter):
 
 def includeme(config):
     config.register_adapter(GeoJsonFeature, interfaces.IParameter)
+    for cls in [BibTex, TxtCitation]:
+        for if_ in [interfaces.IRepresentation, interfaces.IMetadata]:
+            for adapts in [interfaces.IContribution, interfaces.IDataset]:
+                config.register_adapter(cls, adapts, if_, name=cls.mimetype)
