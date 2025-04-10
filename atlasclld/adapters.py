@@ -30,9 +30,11 @@ class GeoJsonFeature(GeoJsonParameter):
             if not val.domainelement.jsondata.get('icon'):
                 res['icon'] = data_url(ATLAsPie([1], ['#ffffff'], width=size_dict[val.value], opacity=0.0, stroke_circle=True))
             if val.domainelement and val.domainelement.jsondata.get('icon'):
-                res['icon'] = data_url(ATLAsPie([1], [val.domainelement.jsondata['icon']], width=size_dict[val.value], opacity=0.65, stroke_circle=True))
+                res['icon'] = data_url(ATLAsPie([1], [val.domainelement.jsondata['icon']], width=25, opacity=1, stroke_circle=True))
         if valueset.parameter.datatype != 'integer' and not valueset.values[0].domainelement.jsondata.get('icon'):
             res['icon'] = data_url(ATLAsPie([1], ['#ffffff'], width=3, opacity=0.0, stroke_circle=True))
+#         else:
+#             res['icon'] = data_url(ATLAsPie([1], [valueset.values[0].domainelement.jsondata['icon']], width=25, opacity=0.75, stroke_circle=True))
         return res
 
     def featurecollection_properties(self, ctx, req):
