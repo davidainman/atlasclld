@@ -1,13 +1,15 @@
 import itertools
 import typing
+import math
 
 from clld.web.util.htmllib import HTML, literal
 from clld.web.util.helpers import map_marker_img, get_adapter, external_link
 from clld.db.meta import DBSession
 from clld.db.models import common
 from clldutils.color import rgb_as_hex
-from clldutils.svg import svg
+from clldutils.svg import svg, style
 from sqlalchemy.orm import joinedload
+from clld import interfaces
 
 
 def contribution_detail_html(context=None, request=None, **kw):
@@ -27,40 +29,45 @@ def value_table(ctx, req):
         .order_by(common.Value.domainelement_pk, common.Value.valueset_pk)\
         .options(joinedload(common.Value.valueset)).all()
     vspks = [v.valueset_pk for v in q]
-
-    for depk, vals in itertools.groupby(q, lambda v: v.domainelement_pk):
+    
+    for depk in domain:
         de = domain[depk]
         exclusive = 0
         shared = 0
-        icon = de.jsondata['icon']
-        if not icon:
+        if not de.jsondata['icon']:
             continue
-        for v in vals:
-            if vspks.count(v.valueset_pk) > 1:
+        for dev in de.values:
+            if vspks.count(dev.valueset_pk) > 1:
                 shared += 1
             else:
                 exclusive += 1
-            langs[v.valueset.language_pk] = 1
-
+            langs[dev.valueset.language_pk] = 1
+        unattested = shared == 0 and exclusive == 0
         cells = [
             HTML.td(map_marker_img(req, de)),
-            HTML.td(literal(de.description)),
-            HTML.td(str(exclusive), class_='right'),
+            HTML.td(HTML.span(de.description, class_ = 'unattested-value') if unattested else literal(de.description)),
+            HTML.td(str(exclusive), class_='right unattested-value') if unattested else HTML.td(str(exclusive), class_='right'),
         ]
-        cells.append(HTML.td(str(shared), class_='right'))
-        cells.append(HTML.td(str(len(de.values)), class_='right'))
+        if ctx.datatype == "multi-valued" or ctx.datatype == "frequency": # "partial" exists
+            cells.append(HTML.td(str(shared), class_='right unattested-value') if unattested else HTML.td(str(shared), class_='right'))
+            cells.append(HTML.td(str(len(de.values)), class_='right unattested-value') if unattested else HTML.td(str(len(de.values)), class_='right'))
         rows.append(HTML.tr(*cells))
-
 
     rows.append(HTML.tr(
         HTML.td('Total Languages:', colspan=str(len(cells) - 1), class_='right'),
         HTML.td('%s' % len(langs), class_='right')))
 
     parts = []
-    parts.append(HTML.thead(
-        HTML.tr(*[HTML.th(s, class_='right')
-                  for s in [' ', '             ', 'exclusive', 'partial', 'all']]))
-    )
+    if ctx.datatype == "multi-valued" or ctx.datatype == "frequency": # "partial" exists
+        parts.append(HTML.thead(
+            HTML.tr(*[HTML.th(s, class_='right')
+                      for s in [' ', '             ', 'exclusive', 'partial', 'all']]))
+        )
+    else:
+        parts.append(HTML.thead(
+            HTML.tr(*[HTML.th(s, class_='right')
+                      for s in [' ', '             ', 'count']]))
+        )
     parts.append(HTML.tbody(*rows))
     return HTML.table(*parts, class_='table table-condensed')
 
@@ -96,7 +103,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
     svg_content = []
     total = sum(data)
     titles = titles or [None] * len(data)
-    stroke_circle = 'black' if stroke_circle is True else stroke_circle or 'none'
+    stroke_circle = '#555555' if stroke_circle is True else stroke_circle or 'none'
 
     def endpoint(angle_rad):
         """
@@ -108,7 +115,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
 
     if len(data) == 1:
         svg_content.append(
-            '<circle cx="{0}" cy="{1}" r="{2}" style="stroke:{3}; fill:{4}; fill-opacity:{5}">'.format(
+            '<circle cx="{0}" cy="{1}" r="{2}" style="stroke:{3}; stroke-width:0.5px; vector-effect:non-scaling-stroke; fill:{4}; fill-opacity:{5}">'.format(
                 cx, cy, radius, stroke_circle, rgb_as_hex(colors[0]), opacity))
         if titles[0]:
             svg_content.append('<title>{0}</title>'.format(escape(titles[0])))
@@ -130,7 +137,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
 
     if stroke_circle != 'none':
         svg_content.append(
-            '<circle cx="%s" cy="%s" r="%s" style="stroke:%s; fill:none;"/>'
+            '<circle cx="%s" cy="%s" r="%s" style="stroke:%s; stroke-width:1px; vector-effect:non-scaling-stroke; fill:none;"/>'
             % (cx, cy, radius, stroke_circle))
 
     return svg(''.join(svg_content), height=width, width=width)

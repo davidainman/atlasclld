@@ -1,2 +1,4 @@
 # development environment: install in development mode
+clld-glottologfamily-plugin==4.1.0
+waitress==3.0.2
 -e .[dev,test]

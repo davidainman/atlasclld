@@ -8,7 +8,7 @@ h3 { padding-top: 25px; }
 </style>
 
 
-<h1>${ctx.name}</h1>
+<h1>${ctx.name} ${h.cite_button(request, ctx)}</h1>
 % if text:
     <%! from clld_markdown_plugin import markdown %>
     ${markdown(req, text)|n}

@@ -1,4 +1,5 @@
 MANIFEST.in
+README.md
 development.ini
 requirements.txt
 setup.cfg
@@ -26,6 +27,7 @@ atlasclld/locale/atlasclld.pot
 atlasclld/scripts/__init__.py
 atlasclld/scripts/initializedb.py
 atlasclld/static/.DS_Store
+atlasclld/static/atlas-map.png
 atlasclld/static/banner-bottom-white.png
 atlasclld/static/banner-finalish.png
 atlasclld/static/banner-not-too-old.png
@@ -39,12 +41,14 @@ atlasclld/static/favicon.ico
 atlasclld/static/project.css
 atlasclld/static/project.js
 atlasclld/static/publisher_logo.png
+atlasclld/static/uzh_entire.png
 atlasclld/static/download/.gitignore
 atlasclld/templates/.DS_Store
 atlasclld/templates/atlasclld.mako
 atlasclld/templates/contact.mako
 atlasclld/templates/credits.mako
 atlasclld/templates/download.mako
+atlasclld/templates/home_comp.mako
 atlasclld/templates/legal.mako
 atlasclld/templates/codes/index_html.mako
 atlasclld/templates/contribution/detail_html.mako

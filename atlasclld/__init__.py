@@ -3,7 +3,7 @@ import functools
 
 from pyramid.config import Configurator
 
-from clld_glottologfamily_plugin import util
+from clld_glottologfamily_plugin import util as glottolog_util
 
 from clldutils import svg
 from clld.interfaces import (
@@ -29,44 +29,10 @@ from markdown.extensions import footnotes
 
 # we must make sure custom models are known at database initialization!
 from atlasclld import models
-from atlasclld.interfaces import OaaMapMarker
-
-
-def map_marker(ctx, req):
-    """allow for user-selectable markers.
-
-    we have to look up a possible custom selection from the url params.
-    """
-    icon = None
-
-    if IValue.providedBy(ctx):
-        icon = req.params.get(
-            "v%s" % ctx.domainelement.number, ctx.domainelement.jsondata["icon"]
-        )
-    elif IDomainElement.providedBy(ctx):
-        icon = req.params.get("v%s" % ctx.number, ctx.jsondata["icon"])
-    elif ILanguage.providedBy(ctx):
-        # hard coded icon
-        icon = req.params.get(ctx.id, "c0000dd")
-        # icon = req.params.get(ctx.id, ctx.genus.icon)
-
-    if icon:
-        if "'" in icon:
-            icon = icon.split("'")[0]
-        if len(icon) > 4 and len(icon) != 7:
-            icon = icon[:4]
-        if len(icon) == 4:
-            icon = icon[0] + 2 * icon[1] + 2 * icon[2] + 2 * icon[3]
-        if icon.startswith("a"):
-            return svg.data_url(svg.icon("c000000", opacity="0"))
-        try:
-            return svg.data_url(svg.icon(icon))
-        except KeyError:
-            return ""
+from atlasclld.interfaces import AtlasMapMarker
 
 
 class CtxFactory(CtxFactoryQuery):
-
     def refined_query(self, query, model, req):
         if model == common.Contribution:
             query = query.options()
@@ -74,7 +40,7 @@ class CtxFactory(CtxFactoryQuery):
             pass
         return query
 
-class LanguageByFamilyMapMarker(util.LanguageByFamilyMapMarker):
+class LanguageByFamilyMapMarker(glottolog_util.LanguageByFamilyMapMarker):
     def __call__(self, ctx, req):
         return super(LanguageByFamilyMapMarker, self).__call__(ctx, req)
 
@@ -86,7 +52,7 @@ def render_parameter(req, objid, table, session, ids=None, **kw):
 
 def main(global_config, **settings):
     """This function returns a Pyramid WSGI application."""
-    settings["route_patterns"] = { 'credits': '/about/credits'}
+    settings["route_patterns"] = { 'credits': '/about/acknowledgments'}
     settings['clld_markdown_plugin'] = {
         'model_map': {
             'ValueTable': common.ValueSet,
@@ -114,7 +80,7 @@ def main(global_config, **settings):
     # config.register_resource("value", models.ATLAsValue, IValue, with_index=True)
 
     config.registry.registerUtility(CtxFactory(), ICtxFactoryQuery)
-    config.registry.registerUtility(OaaMapMarker(), IMapMarker)
+    config.registry.registerUtility(AtlasMapMarker(), IMapMarker)
     config.add_route("references", "/sources")
     # config.registry.registerUtility(LanguageByFamilyMapMarker(), IMapMarker)
     config.register_menu(
