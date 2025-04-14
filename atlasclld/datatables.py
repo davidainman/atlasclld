@@ -52,6 +52,14 @@ class AtlasIdCol(LinkCol):
             return icontains(self.model_col, qs)
 
 
+class AtlasLanguageCol(LinkCol):
+    def search(self, qs):
+        return icontains(common.Language.name, qs)
+
+    def order(self):
+        return common.Language.name
+
+
 class AtlasAuthorsCol(Col):
     __kw__ = {'bSearchable': False, 'bSortable': False}
 
@@ -59,6 +67,7 @@ class AtlasAuthorsCol(Col):
         return HTML.ul(
             *[HTML.li(link(
                 self.dt.req, c.contribution)) for c in item.contribution_assocs if c.primary])
+
 
 class AtlasContributionsCol(Col):
     __kw__ = {'bSearchable': False, 'bSortable': False}
@@ -167,7 +176,7 @@ class Values(datatables.Values):
             if self.parameter.datatype == "frequency":
                 if self.parameter.featureset.id == "Align":
                     return [
-                        LinkCol(
+                        AtlasLanguageCol(
                             self,
                             "Language ID",
                             sTitle="Language",
@@ -183,7 +192,7 @@ class Values(datatables.Values):
                         ]
                 else:
                     return [
-                        LinkCol(
+                        AtlasLanguageCol(
                             self,
                             "Language ID",
                             sTitle="Language",
@@ -199,7 +208,7 @@ class Values(datatables.Values):
                         ]
             else:
                 return [
-                    LinkCol(
+                    AtlasLanguageCol(
                         self,
                         "Language ID",
                         sTitle="Language",
