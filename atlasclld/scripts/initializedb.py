@@ -26,13 +26,14 @@ def main(args):
     dataset = common.Dataset(
         name="ATLAs",
         id="atlas",
-        domain="the-url-we-will-use",
+        domain="http://atlas.evolvinglanguage.ch",
         publisher_name="University of Zurich",
         publisher_place="Zurich, Switzerland",
         publisher_url="https://www.uzh.ch/",
+        contact="atlas.database.team@gmail.com",
         license="http://creativecommons.org/licenses/by/4.0/",
         jsondata={
-            "license_icon": "cc-by.png",  # TODO: replace with custome one
+            "license_icon": "cc-by.png",
             "license_name": "Creative Commons Attribution 4.0 International License",
         },
         description="Areal Typology of Languages of the Americas"
@@ -185,6 +186,7 @@ def main(args):
                 code_id=row["CodeID"],
                 value=row["Value"],
                 remark=row["Remark"],
+                frequency=row["Frequency"],
                 coder=";".join(row["Coder"]),
             )
 
