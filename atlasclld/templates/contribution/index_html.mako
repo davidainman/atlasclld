@@ -5,7 +5,7 @@
 <%block name="title">Feature Sets</%block>
 <h2>Feature Sets</h2>
 <p>
-    Feature sets are collections of typological features that together capture linguistic variation within a typological domain. The typological domain covered, motivation for its inclusion in the database, a full list of associated features, and results of the study are given in each feature set description.
+    ATLAs contains 17 feature sets, which are designed to capture linguistic variation within a typological domain. Each feature set description typically contains sections providing detailed information on the typological domain covered (What), motivation for its inclusion in the database (Why), the methodology used (How), a full list of associated features accompanied by explanations and examples (Features and Derived features), and finally results of the survey (Results). Each feature set has one or more authors who are primarily responsible for the feature set description, conceptualization and coding supervision, and a number of other contributors that have provided feedback, contributed to the conceptualization, and/or coded languages for the features in question. Detailed information on the authors’ and other contributors’ roles can be found in each feature set description.
 </p>
 <div class="clearfix"> </div>
 ${ctx.render()}
