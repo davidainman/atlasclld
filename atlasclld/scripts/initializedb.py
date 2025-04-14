@@ -1,6 +1,7 @@
 import re
 import itertools
 import collections
+import math
 
 import pycldf
 from tqdm import tqdm
@@ -187,6 +188,7 @@ def main(args):
                 value=row["Value"],
                 remark=row["Remark"],
                 frequency=row["Frequency"],
+                count=math.ceil(row["Frequency"]),
                 coder=";".join(row["Coder"]),
             )
 

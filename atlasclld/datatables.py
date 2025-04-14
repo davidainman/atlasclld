@@ -164,20 +164,54 @@ class Values(datatables.Values):
 
     def col_defs(self):
         if self.parameter:
-            return [
-                LinkCol(
-                    self,
-                    "Language ID",
-                    sTitle="Language",
-                    model_col=ATLAsLanguage.id,
-                    sClass="left",
-                    get_object=lambda i: i.valueset.language,
-                ),
-                AtlasValueNameCol(self, "Value", sClass="left", choices=[de.name for de in self.parameter.domain]),
-                Col(self, "Remark", model_col=ATLAsValue.remark, sClass="left"),
-                RefsCol(self, 'Source'),
-                CommentCol(self, 'c'),
-            ]
+            if self.parameter.datatype == "frequency":
+                if self.parameter.featureset.id == "Align":
+                    return [
+                        LinkCol(
+                            self,
+                            "Language ID",
+                            sTitle="Language",
+                            model_col=ATLAsLanguage.id,
+                            sClass="left",
+                            get_object=lambda i: i.valueset.language,
+                        ),
+                        AtlasValueNameCol(self, "Value", sClass="left", choices=[de.name for de in self.parameter.domain]),
+                        Col(self, "Proportion", model_col=ATLAsValue.frequency, sClass="left"),
+                        Col(self, "Remark", model_col=ATLAsValue.remark, sClass="left"),
+                        RefsCol(self, 'Source'),
+                        CommentCol(self, 'c'),
+                        ]
+                else:
+                    return [
+                        LinkCol(
+                            self,
+                            "Language ID",
+                            sTitle="Language",
+                            model_col=ATLAsLanguage.id,
+                            sClass="left",
+                            get_object=lambda i: i.valueset.language,
+                        ),
+                        AtlasValueNameCol(self, "Value", sClass="left", choices=[de.name for de in self.parameter.domain]),
+                        Col(self, "Count", model_col=ATLAsValue.count, sClass="left"),
+                        Col(self, "Remark", model_col=ATLAsValue.remark, sClass="left"),
+                        RefsCol(self, 'Source'),
+                        CommentCol(self, 'c'),
+                        ]
+            else:
+                return [
+                    LinkCol(
+                        self,
+                        "Language ID",
+                        sTitle="Language",
+                        model_col=ATLAsLanguage.id,
+                        sClass="left",
+                        get_object=lambda i: i.valueset.language,
+                    ),
+                    AtlasValueNameCol(self, "Value", sClass="left", choices=[de.name for de in self.parameter.domain]),
+                    Col(self, "Remark", model_col=ATLAsValue.remark, sClass="left"),
+                    RefsCol(self, 'Source'),
+                    CommentCol(self, 'c'),
+                ]
         if self.language:
             return [
                 AtlasIdCol(
