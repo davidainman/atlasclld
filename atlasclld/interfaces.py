@@ -42,7 +42,7 @@ class AtlasMapMarker(MapMarker):
 
         else:
             slices = Counter()
-            icon = '#ffffff'
+            icon = '#016acb'
             slices[icon] = 1
             return self.pie(*[(v, k) for k, v in slices.most_common()])
 
