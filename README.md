@@ -1,3 +1,5 @@
+This web application is intended to be used with the [ATLAs CLDF data](https://github.com/davidainman/atlas-data/)
+
 Instructions for running the ATLAs CLLD application:
 
 1. Subscribe to the atlas-data repository or download a copy.
