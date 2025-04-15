@@ -70,6 +70,7 @@ class ATLAsValue(CustomModelMixin, common.Value):
     value = Column(Unicode)
     code_id = Column(Unicode)
     coder = Column(Unicode)
+    count = Column(Integer)
 
     def __str__(self):
         return self.id
