@@ -15,6 +15,14 @@ ${h.text2html(h.Markup(ctx.markup_description) if ctx.markup_description else ct
         <tr role="row">
             <th class="left" tabindex="0" rowspan="1" colspan="1">ID</th>
             <th class="left" tabindex="0" rowspan="1" colspan="1">Value</th>
+
+% if ctx.parameter.datatype == 'frequency':
+% if ctx.parameter.featureset.id == 'Align':
+            <th class="left" tabindex="0" rowspan="1" colspan="1">Proportion</th>
+% else:
+            <th class="left" tabindex="0" rowspan="1" colspan="1">Count</th>
+% endif
+% endif
             <th class="left" tabindex="0" rowspan="1" colspan="1">Remark</th>
         </tr>
     </thead>
@@ -22,11 +30,22 @@ ${h.text2html(h.Markup(ctx.markup_description) if ctx.markup_description else ct
         % for i, value in enumerate(ctx.values):
         <tr role="row" class="odd">
         <td class=" left">
-            ${h.map_marker_img(request, value)}${value}${h.format_frequency(request, value)}
+            ${h.map_marker_img(request, value)} ${value}
         </td>
         <td class=" left">
             ${ctx.values[i].value}
         </td>
+% if ctx.parameter.datatype == 'frequency':
+% if ctx.parameter.featureset.id == 'Align':
+        <td class=" left">
+            ${ctx.values[i].frequency}
+        </td>
+% else:
+        <td class=" left">
+            ${ctx.values[i].count}
+        </td>
+% endif
+% endif
         <td class=" left">
             ${ctx.values[i].remark}
         </td>
@@ -36,7 +55,7 @@ ${h.text2html(h.Markup(ctx.markup_description) if ctx.markup_description else ct
 <%def name="sidebar()">
 <div class="well well-small">
 <dl>
-    <dt class="contribution">${_('Contribution')}:</dt>
+    <dt class="contribution">${_('Feature set')}:</dt>
     <dd class="contribution">
         ${h.link(request, ctx.contribution)}
         by
