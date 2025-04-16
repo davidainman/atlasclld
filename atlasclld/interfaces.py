@@ -35,7 +35,8 @@ class AtlasMapMarker(MapMarker):
                 res = Icon.from_req(ctx, req) # TODO: This returns the same value for multi-state parameters
                 print(value)
                 print(icon)
-                print(res.color)
+                if res:
+                    print(res.color)
                 if res:
                     icon = res.color
                 if icon and icon.startswith("#"):
