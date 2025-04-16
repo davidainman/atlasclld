@@ -111,6 +111,13 @@ class FeaturesetCol(LinkCol):
         return ATLAsParameter.featureset_pk
 
 
+class AtlasValueNameCol(ValueNameCol):
+    def get_attrs(self, item):
+        label = str(item.value) or 'NO_LABEL'
+        label = HTML.span(map_marker_img(self.dt.req, item), literal('&nbsp;'), label)
+        return {'label': label, 'title': str(item.value)}
+
+
 # personalized tables
 class Features(datatables.Parameters):
     __constraints__ = [ATLAsFeatureSet]
@@ -136,6 +143,7 @@ class Features(datatables.Parameters):
             ),
         ]
 
+
 class Featuresets(datatables.Contributions):
     def col_defs(self):
         return [
@@ -154,13 +162,6 @@ class Languages(datatables.Languages):
             Col(self, "Family", sTitle="Family", model_col=ATLAsLanguage.family_name, sClass="left"),
             Col(self, "Macroarea", model_col=ATLAsLanguage.macroarea, sClass="left"),
         ]
-
-
-class AtlasValueNameCol(ValueNameCol):
-    def get_attrs(self, item):
-        label = str(item.value) or 'NO_LABEL'
-        label = HTML.span(map_marker_img(self.dt.req, item), literal('&nbsp;'), label)
-        return {'label': label, 'title': str(item.value)}
 
 
 class Values(datatables.Values):
@@ -257,6 +258,13 @@ class Contributors(datatables.Contributors):
         return query.filter(common.Contributor.id != 'auto')
 
 
+class Sources(datatables.Sources):
+    def get_options(self):
+        opts = super().get_options()
+        opts['aaSorting'] = [[1, 'asc']]
+        return opts
+
+
 def includeme(config):
     # the name of the datatable must be the same as the name given to the route pattern
     config.register_datatable("values", Values)
@@ -264,3 +272,4 @@ def includeme(config):
     config.register_datatable("parameters", Features)
     config.register_datatable("contributions", Featuresets)
     config.register_datatable("contributors", Contributors)
+    config.register_datatable("sources", Sources)
