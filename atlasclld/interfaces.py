@@ -19,8 +19,8 @@ class AtlasMapMarker(MapMarker):
             slices = Counter()
             icon = ctx.jsondata['icon']
             res = Icon.from_req(ctx, req)
-            #if res:
-            #    icon = res.color
+            if res:
+                icon = res.color
             if icon:
                 if ctx.values:
                     for value in ctx.values:
@@ -33,6 +33,9 @@ class AtlasMapMarker(MapMarker):
             for value in ctx.values:
                 icon = value.domainelement.jsondata['icon']
                 res = Icon.from_req(ctx, req) # TODO: This returns the same value for multi-state parameters
+                print(value)
+                print(icon)
+                print(res.color)
                 if res:
                     icon = res.color
                 if icon and icon.startswith("#"):
