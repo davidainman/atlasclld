@@ -7,5 +7,9 @@
 </%block>
 
 <h2>Languages</h2>
+
+<p>
+    ATLAs includes 325 languages, of which 220 are spoken in the Americas. Language names and glottocodes are according to ${h.external_link('https://glottolog.org/', label='Glottolog')} ${h.external_link('https://zenodo.org/records/10804357', label='v5.0')}.
+</p>
 <div class="clearfix"> </div>
 ${ctx.render()}

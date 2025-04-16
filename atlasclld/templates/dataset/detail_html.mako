@@ -37,10 +37,10 @@
     Features are further designed with the intention of maximizing logical independence, or making it possible to staightforwardly manipulate the data in order to attain logically independent variables. Many features contain &lt;NA&gt; states — not applicable — in order to avoid features that encode the same information multiple times. For example, if a language has no verbal indexation, its verbal alignment is &lt;NA&gt; — not applicable — rather than &lt;neutral&gt; — a neutral alignment.
 </p>
 
-<h3>How to use ATLAs Online</h3>
+<h3>How to use ATLAs online</h3>
 
 <p>
-    ATLAs Online requires a browser with Javascript enabled.
+    ATLAs online requires a browser with Javascript enabled.
 </p>
 <p>
     Data in ATLAs is organized into feature sets, which cover a typological domain or theme, and each feature set includes multiple features. Feature set descriptions provide lists of associated features, their linguistic motivation, coding methodology, and results, and can be accessed through the tab "Feature Sets" in the navigation bar. Alternatively, features can be accessed directly, without going through feature sets description, in the "Features" tab of the same navigation bar. 
@@ -55,9 +55,18 @@
     Finally, you can search for references through the "References" tab.
 </p>
 
-<h3>How to cite ATLAs Online</h3>
+<h3>How to cite ATLAs</h3>
 <p>
-    TODO ${h.cite_button(request, ctx)}
+    If you are citing the ATLAs database as a whole without using any associated data, you should cite the database as published in ${h.external_link('#', label='Scientific Data')}.
+</p>
+<p>
+    If you are using data from multiple feature sets of ATLAs, you should cite the database as a whole, as published in  ${h.external_link('#', label='Scientific Data')}, as well as ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='the specific version of the database from Zenodo')} you are using.
+</p>
+<p>
+    If you are citing a particular feature set description (without using any associated data), you can cite only the specific feature set, as seen in the feature set page.
+</p>
+<p>
+    If you are using data from a specific feature set, then you should cite the feature set in question, as well as the database publication in ${h.external_link('#', label='Scientific Data')} and ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='the specific version of the database from Zenodo')}. 
 </p>
 
 <h3>Terms of use</h3>
