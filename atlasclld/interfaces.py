@@ -1,7 +1,7 @@
 from collections import Counter
 
 from clld.interfaces import IValueSet, IValue, IDomainElement, IMapMarker
-from clld.web.icon import MapMarker
+from clld.web.icon import MapMarker, Icon
 from clldutils.svg import data_url, style
 from atlasclld.util import ATLAsPie
 
@@ -18,6 +18,9 @@ class AtlasMapMarker(MapMarker):
         if IDomainElement.providedBy(ctx):
             slices = Counter()
             icon = ctx.jsondata['icon']
+            res = Icon.from_req(ctx, req)
+            #if res:
+            #    icon = res.color
             if icon:
                 if ctx.values:
                     for value in ctx.values:
@@ -29,6 +32,9 @@ class AtlasMapMarker(MapMarker):
             slices = Counter()
             for value in ctx.values:
                 icon = value.domainelement.jsondata['icon']
+                res = Icon.from_req(ctx, req) # TODO: This returns the same value for multi-state parameters
+                if res:
+                    icon = res.color
                 if icon and icon.startswith("#"):
                     slices[icon] += value.frequency or 1
             return self.pie(*[(v, k) for k, v in slices.most_common()])
@@ -36,6 +42,9 @@ class AtlasMapMarker(MapMarker):
         if IValue.providedBy(ctx):
             slices = Counter()
             icon = ctx.domainelement.jsondata['icon']
+            res = Icon.from_req(ctx, req)
+            if res:
+                icon = res.color
             if icon and icon.startswith("#"):
                 slices[icon] = ctx.frequency or 1
                 return self.pie(*[(v, k) for k, v in slices.most_common()])

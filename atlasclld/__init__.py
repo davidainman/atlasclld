@@ -29,6 +29,7 @@ from markdown.extensions import footnotes
 
 # we must make sure custom models are known at database initialization!
 from atlasclld import models
+from atlasclld.util import icon_from_req
 from atlasclld.interfaces import AtlasMapMarker
 
 
@@ -43,6 +44,13 @@ class CtxFactory(CtxFactoryQuery):
 class LanguageByFamilyMapMarker(glottolog_util.LanguageByFamilyMapMarker):
     def __call__(self, ctx, req):
         return super(LanguageByFamilyMapMarker, self).__call__(ctx, req)
+
+
+def map_marker(ctx, req):
+    """to allow for user-selectable markers, we have to look up a possible custom
+    selection from the url params.
+    """
+    return icon_from_req(ctx, req).url(req)
 
 
 def render_parameter(req, objid, table, session, ids=None, **kw):

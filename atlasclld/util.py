@@ -10,6 +10,7 @@ from clldutils.color import rgb_as_hex
 from clldutils.svg import svg, style
 from sqlalchemy.orm import joinedload
 from clld import interfaces
+from clld.web.icon import Icon
 
 
 def contribution_detail_html(context=None, request=None, **kw):
@@ -75,6 +76,7 @@ def value_table(ctx, req):
 def parameter_link(req, sym, p):
     return HTML.a(sym, href=req.resource_url(p), style="color: black;") if p else sym
 
+
 # unique pie() function for ATLAs, incorporating opacity
 def ATLAsPie(data: typing.List[typing.Union[float, int]],
              colors: typing.Optional[typing.List[str]] = None,
@@ -116,7 +118,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
     if len(data) == 1:
         svg_content.append(
             '<circle cx="{0}" cy="{1}" r="{2}" style="stroke:{3}; stroke-width:0.5px; vector-effect:non-scaling-stroke; fill:{4}; fill-opacity:{5}">'.format(
-                cx, cy, radius, stroke_circle, rgb_as_hex(colors[0]), opacity))
+                cx, cy, radius, stroke_circle, rgb_as_hex(colors[0]), opacity)) # TODO: strip opacity before calling rgb_as_hex
         if titles[0]:
             svg_content.append('<title>{0}</title>'.format(escape(titles[0])))
         svg_content.append('</circle>')
@@ -130,7 +132,7 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
         radius2 = "L%s,%s" % (cx, cy)
         svg_content.append(
             '<path d="{0} {1} {2}" style="{3}" transform="rotate(90 {4} {5})">'.format(
-                radius1, arc, radius2, style(fill=rgb_as_hex(color)), cx, cy))
+                radius1, arc, radius2, style(fill=rgb_as_hex(color)), cx, cy)) # TODO: strip opacity before calling rgb_as_hex
         if title:
             svg_content.append('<title>{0}</title>'.format(escape(title)))
         svg_content.append('</path>')
@@ -141,3 +143,16 @@ def ATLAsPie(data: typing.List[typing.Union[float, int]],
             % (cx, cy, radius, stroke_circle))
 
     return svg(''.join(svg_content), height=width, width=width)
+
+
+# for manually selected colors
+def icon_spec_factory(ctx, req):
+    if interfaces.ILanguage.providedBy(ctx):
+        return req.params.get(ctx.genus.id, ctx.genus.icon), ctx.genus.id
+
+
+def icon_from_req(ctx, req):
+    res = Icon.from_req(ctx, req, icon_spec_factory=icon_spec_factory)
+    if not res:
+        return Icon('cFFFFFF', opacity=0.1)
+    return res
