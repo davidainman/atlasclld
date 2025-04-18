@@ -13,6 +13,7 @@ atlasclld/assets.py
 atlasclld/datatables.py
 atlasclld/interfaces.py
 atlasclld/maps.py
+atlasclld/md.py
 atlasclld/models.py
 atlasclld/util.py
 atlasclld/views.py
@@ -51,11 +52,15 @@ atlasclld/templates/download.mako
 atlasclld/templates/home_comp.mako
 atlasclld/templates/legal.mako
 atlasclld/templates/codes/index_html.mako
+atlasclld/templates/contribution/.DS_Store
 atlasclld/templates/contribution/detail_html.mako
 atlasclld/templates/contribution/index_html.mako
+atlasclld/templates/contribution/md_txt.mako
 atlasclld/templates/contributor/detail_html.mako
 atlasclld/templates/contributor/index_html.mako
+atlasclld/templates/dataset/.DS_Store
 atlasclld/templates/dataset/detail_html.mako
+atlasclld/templates/dataset/md_txt.mako
 atlasclld/templates/language/detail_html.mako
 atlasclld/templates/language/index_html.mako
 atlasclld/templates/language/map_html.mako
