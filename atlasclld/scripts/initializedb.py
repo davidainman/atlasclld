@@ -28,9 +28,9 @@ def main(args):
         name="ATLAs",
         id="atlas",
         domain="http://atlas.evolvinglanguage.ch",
-        publisher_name="University of Zurich",
+        publisher_name="NCCR Evolving Language",
         publisher_place="Zurich, Switzerland",
-        publisher_url="https://www.uzh.ch/",
+        publisher_url="https://evolvinglanguage.ch/",
         contact="atlas.database.team@gmail.com",
         license="http://creativecommons.org/licenses/by/4.0/",
         jsondata={

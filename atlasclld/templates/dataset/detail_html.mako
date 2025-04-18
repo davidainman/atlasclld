@@ -73,3 +73,24 @@
 <p>
     The content of this web site is published under a Creative Commons Licence. We invite scholars and users to use this data for further linguistic study, and look forward to comments, feedback, and questions.
 </p>
+
+<h3>Funding</h3>
+<p>
+    ATLAs was funded by the Swiss National Science Foundation Sinergia Project "Out of Asia" (CRSII5_183578), the University of Zurich, and the Swiss National Centre of Competence in Research Evolving Language.
+</p>
+<div class="span12">
+    <table width="100%">
+        <tr>
+            <td style="text-align: center" width="33%">
+                <a href="https://www.snf.ch/"><img src="${req.static_url('atlasclld:static/snsf_entire.png')}"
+                     alt="https://www.snf.ch/" width="210"></a>
+            </td>
+            <td style="text-align: center" width="33%">
+                <a href="https://uzh.ch/"><img src="${req.static_url('atlasclld:static/uzh_entire.png')}"
+                     alt="https://uzh.ch/" width="200"></a>
+            </td>
+            <td style="text-align: center" width="33%">
+                <a href="https://evolvinglanguage.ch/"><img src="${req.static_url('atlasclld:static/evolang_entire.png')}" alt="https://evolvinglanguage.ch/" width="170"></a>
+            </td>
+    </table>
+</div>
