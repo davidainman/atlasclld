@@ -37,10 +37,10 @@
     Features are further designed with the intention of maximizing logical independence, or making it possible to staightforwardly manipulate the data in order to attain logically independent variables. Many features contain &lt;NA&gt; states — not applicable — in order to avoid features that encode the same information multiple times. For example, if a language has no verbal indexation, its verbal alignment is &lt;NA&gt; — not applicable — rather than &lt;neutral&gt; — a neutral alignment.
 </p>
 
-<h3>How to use ATLAs Online</h3>
+<h3>How to use ATLAs online</h3>
 
 <p>
-    ATLAs Online requires a browser with Javascript enabled.
+    ATLAs online requires a browser with Javascript enabled.
 </p>
 <p>
     Data in ATLAs is organized into feature sets, which cover a typological domain or theme, and each feature set includes multiple features. Feature set descriptions provide lists of associated features, their linguistic motivation, coding methodology, and results, and can be accessed through the tab "Feature Sets" in the navigation bar. Alternatively, features can be accessed directly, without going through feature sets description, in the "Features" tab of the same navigation bar. 
@@ -55,12 +55,42 @@
     Finally, you can search for references through the "References" tab.
 </p>
 
-<h3>How to cite ATLAs Online</h3>
+<h3>How to cite ATLAs</h3>
 <p>
-    TODO ${h.cite_button(request, ctx)}
+    If you are citing the ATLAs database as a whole without using any associated data, you should cite the database as published in ${h.external_link('#', label='Scientific Data')}.
+</p>
+<p>
+    If you are using data from multiple feature sets of ATLAs, you should cite the database as a whole, as published in  ${h.external_link('#', label='Scientific Data')}, as well as ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='the specific version of the database from Zenodo')} you are using.
+</p>
+<p>
+    If you are citing a particular feature set description (without using any associated data), you can cite only the specific feature set, as seen in the feature set page.
+</p>
+<p>
+    If you are using data from a specific feature set, then you should cite the feature set in question, as well as the database publication in ${h.external_link('#', label='Scientific Data')} and ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='the specific version of the database from Zenodo')}. 
 </p>
 
 <h3>Terms of use</h3>
 <p>
     The content of this web site is published under a Creative Commons Licence. We invite scholars and users to use this data for further linguistic study, and look forward to comments, feedback, and questions.
 </p>
+
+<h3>Funding</h3>
+<p>
+    ATLAs was funded by the Swiss National Science Foundation Sinergia Project "Out of Asia" (CRSII5_183578), the University of Zurich, and the Swiss National Centre of Competence in Research Evolving Language.
+</p>
+<div class="span12">
+    <table width="100%">
+        <tr>
+            <td style="text-align: center" width="33%">
+                <a href="https://www.snf.ch/"><img src="${req.static_url('atlasclld:static/snsf_entire.png')}"
+                     alt="https://www.snf.ch/" width="210"></a>
+            </td>
+            <td style="text-align: center" width="33%">
+                <a href="https://uzh.ch/"><img src="${req.static_url('atlasclld:static/uzh_entire.png')}"
+                     alt="https://uzh.ch/" width="200"></a>
+            </td>
+            <td style="text-align: center" width="33%">
+                <a href="https://evolvinglanguage.ch/"><img src="${req.static_url('atlasclld:static/evolang_entire.png')}" alt="https://evolvinglanguage.ch/" width="170"></a>
+            </td>
+    </table>
+</div>
