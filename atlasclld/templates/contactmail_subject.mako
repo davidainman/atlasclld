@@ -1,1 +1,1 @@
-Issue in ${ctx.id if ctx.id else req.dataset.name}
+Issue in ${ctx.id if ctx and ctx.id else req.dataset.name}
