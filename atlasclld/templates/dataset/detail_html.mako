@@ -66,7 +66,7 @@
     If you are citing a particular feature set description (without using any associated data), you can cite only the specific feature set, as seen in the feature set page.
 </p>
 <p>
-    If you are using data from a specific feature set, then you should cite the feature set in question, as well as the database publication in ${h.external_link('#', label='Scientific Data')} and ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='the specific version of the database from Zenodo')}. 
+    If you are using data from a specific feature set, then you should cite the feature set in question, as well as the database publication in ${h.external_link('https://rdcu.be/epid5', label='Scientific Data')} and ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='the specific version of the database from Zenodo')}. 
 </p>
 
 <h3>Terms of use</h3>
