@@ -16,7 +16,7 @@
     The Areal Typology of Languages of the Americas (ATLAs) is a database of typological features targeting areal linguistic structures in North and South America, collected from language descriptions by a team of <a href="${request.route_url('contributors')}">21 authors</a>.
 </p>
 <p>
-    ATLAs was first published in 2025 in (TODO:link) Scientific Data. We periodically publish corrections, and thus any citation of the ATLAs data should include a link to the version used, as listed on ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='Zenodo')}.
+    ATLAs was first published in 2025 in ${h.external_link('https://www.nature.com/articles/s41597-025-05169-4', label='Scientific Data')}. We periodically publish corrections, and thus any citation of the ATLAs data should include a link to the version used, as listed on ${h.external_link('https://doi.org/10.5281/zenodo.14504419', label='Zenodo')}.
 </p>
 <p>
     The language sample of ATLAs includes 325 languages, of which 115 are in North America and 105 in South America. Their geographic distribution and family affiliation can be seen in the map below.
